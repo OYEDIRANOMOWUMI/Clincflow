@@ -1,0 +1,4 @@
+node_modules
+.env
+clinicflow-backend-local/.env
+clinicflow-frontend-local/.env

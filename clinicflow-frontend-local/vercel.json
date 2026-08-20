@@ -1,0 +1,20 @@
+{
+  "rewrites": [
+    {
+      "source": "/manifest.webmanifest",
+      "destination": "/manifest.webmanifest"
+    },
+    {
+      "source": "/assets/(.*)",
+      "destination": "/assets/$1"
+    },
+    {
+      "source": "/(.*\\.(?:js|css|png|jpg|jpeg|svg|ico|webp|json|map|woff|woff2|ttf|eot|txt))",
+      "destination": "/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
