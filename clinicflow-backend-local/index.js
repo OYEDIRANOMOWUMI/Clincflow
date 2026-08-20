@@ -36,7 +36,6 @@ app.use(cors({
 }))
 
 
-
 const userRoutes = require('./routes/user.routes')
 const doctorRoutes = require('./routes/doctors.routes')
 const adminRoutes = require('./routes/admin.routes')
