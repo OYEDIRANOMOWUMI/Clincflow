@@ -16,9 +16,17 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors({
   origin: (origin, callback) => {
+    const configuredOrigins = (process.env.FRONTEND_URLS || process.env.FRONTEND_URL || '')
+      .split(',')
+      .map((value) => value.trim())
+      .filter(Boolean)
+
     const allowedOrigins = [
       'https://clinicflow.vercel.app',
-      'https://www.clinicflow.vercel.app'
+      'https://www.clinicflow.vercel.app',
+      'https://clincflow.vercel.app',
+      'https://www.clincflow.vercel.app',
+      ...configuredOrigins
     ]
 
     const isLocalOrigin = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin || '')
