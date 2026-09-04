@@ -1,0 +1,11 @@
+const express = require('express')
+const router = express.Router()
+const { createPaymentCheckout, getPaymentsForPatient } = require('../controllers/payment.controllers')
+const { getInvoices } = require('../controllers/invoice.controllers')
+const { authMiddleware, requireRole } = require('../middlewares/authMiddleware')
+
+router.post('/checkout', authMiddleware, requireRole('patient'), createPaymentCheckout)
+router.get('/patient/:patientId', authMiddleware, requireRole('patient', 'admin'), getPaymentsForPatient)
+router.get('/invoices', authMiddleware, requireRole('patient', 'admin'), getInvoices)
+
+module.exports = router

@@ -1,0 +1,28 @@
+const express = require('express')
+const router = express.Router()
+const { getAuth,getLogin, getAllPatients, getAllDoctors } = require('../controllers/admin.contollers')
+const { authMiddleware, requireRole } = require('../middlewares/authMiddleware')
+const { listHospitalStaff, listHospitalPatients, updateStaffStatus } = require('../controllers/adminWorkflow.controllers')
+const { getShifts, createShift, updateShift, deleteShift } = require('../controllers/doctorShift.controllers')
+const { getWaitlist, createWaitlistEntry, updateWaitlistEntry, deleteWaitlistEntry } = require('../controllers/waitlist.controllers')
+const { getAuditLogs } = require('../controllers/auditLog.controllers')
+
+
+router.post('/reg', getAuth)
+router.post('/signin', getLogin)
+router.get('/getUsers', authMiddleware, requireRole('admin'), getAllDoctors)
+router.get('/getPatient', authMiddleware, requireRole('admin'), getAllPatients)
+router.get('/staff', authMiddleware, requireRole('admin'), listHospitalStaff)
+router.get('/patients', authMiddleware, requireRole('admin'), listHospitalPatients)
+router.patch('/staff/:id/status', authMiddleware, requireRole('admin'), updateStaffStatus)
+router.get('/shifts', authMiddleware, requireRole('admin'), getShifts)
+router.post('/shifts', authMiddleware, requireRole('admin'), createShift)
+router.patch('/shifts/:id', authMiddleware, requireRole('admin'), updateShift)
+router.delete('/shifts/:id', authMiddleware, requireRole('admin'), deleteShift)
+router.get('/waitlist', authMiddleware, requireRole('admin'), getWaitlist)
+router.post('/waitlist', authMiddleware, requireRole('admin'), createWaitlistEntry)
+router.patch('/waitlist/:id', authMiddleware, requireRole('admin'), updateWaitlistEntry)
+router.delete('/waitlist/:id', authMiddleware, requireRole('admin'), deleteWaitlistEntry)
+router.get('/audit-logs', authMiddleware, requireRole('admin'), getAuditLogs)
+
+module.exports = router
