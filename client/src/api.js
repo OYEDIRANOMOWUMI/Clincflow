@@ -1,5 +1,5 @@
 const localApiFallback = 'http://localhost:3700/api'
-const productionApiFallback = 'https://clinicflow-back.vercel.app/api'
+const productionApiFallback = 'https://server-fiv-chi-32.vercel.app/api'
 import axios from 'axios'
 import { clearSession, getLoginPathForRole, getSession, setAuthNotice } from './auth.js'
 
