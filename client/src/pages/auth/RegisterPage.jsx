@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowRight, Building2, ShieldCheck, UserPlus } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_URL } from '../../api';
 import { saveSession } from '../../auth';
 
 const registerSchema = z.object({
@@ -32,7 +33,7 @@ export default function RegisterPage() {
     setServerError('');
 
     try {
-      const response = await axios.post('http://localhost:3700/api/hospitals/register', {
+      const response = await axios.post(`${API_URL}/hospitals/register`, {
         hospitalName: values.hospitalName,
         adminEmail: values.email,
         password: values.password,
@@ -45,7 +46,12 @@ export default function RegisterPage() {
       form.reset();
       navigate(session.role === 'admin' ? '/dashboard/admin' : '/dashboard', { replace: true });
     } catch (error) {
-      setServerError(error?.response?.data?.message || 'Unable to create the hospital account right now.');
+      if (!error?.response) {
+        setServerError("Can't reach the server — check that the backend is running and try again.");
+        return;
+      }
+
+      setServerError(error.response?.data?.message || 'Unable to create the hospital account right now.');
     }
   };
 
